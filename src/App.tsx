@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { EventBus } from "./EventBus";
-import { PhaserGame } from "./PhaserGame";
+import { type IRefPhaserGame, PhaserGame } from "./PhaserGame";
 
 export default function App() {
   const [status, setStatus] = useState("準備完了");
+
+  // 子コンポーネント（PhaserGame）の game インスタンスや scene への参照
+  const phaserRef = useRef<IRefPhaserGame | null>(null);
 
   useEffect(() => {
     // Phaser側からのイベントを受け取る例
@@ -26,7 +29,7 @@ export default function App() {
         状態: {status}
       </header>
       {/* Phaserゲーム画面 */}
-      <PhaserGame />
+      <PhaserGame ref={phaserRef} />
     </main>
   );
 }
